@@ -6,7 +6,7 @@ namespace RabbitMQ.Common
     {
         private ConnectionFactory? factory;
 
-        public ConnectionFactory GetConnectionFactory()
+        public IConnection GetConnectionFactory()
         {
 
             if (factory == null)
@@ -19,7 +19,7 @@ namespace RabbitMQ.Common
                     Password = "guest"
                 };
             }
-            return factory;
+            return factory.CreateConnection();
         }
     }
 }
