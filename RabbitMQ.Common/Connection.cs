@@ -6,7 +6,7 @@ namespace RabbitMQ.Common
     {
         private ConnectionFactory? factory;
 
-        public IConnection GetConnectionFactory()
+        public IConnection GetConnection()
         {
 
             if (factory == null)
@@ -21,5 +21,7 @@ namespace RabbitMQ.Common
             }
             return factory.CreateConnection();
         }
+        public IModel GetModel()=> GetConnection().CreateModel();
+
     }
 }
