@@ -1,5 +1,7 @@
 ﻿using RabbitMQ.Client;
 using RabbitMQ.Common;
+using System;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 
@@ -22,7 +24,6 @@ while (true)
 
     string isContinue = Console.ReadLine() ?? "N";
     if (isContinue.ToUpper().Equals("N")) break;
-
 }
 
 Console.WriteLine("done");
@@ -36,14 +37,15 @@ string RandomString(int length)
 
 void DoWork(int lineCount)
 {
+    channel.QueueDeclare("TestQueue", true, false, false);
+    //var queueName = channel.QueueDeclare().QueueName;
     for (int i = 1; i <= lineCount; i++)
     {
-        channel.QueueDeclare("Test", false, false, false);
         var userr = new { index = i, name = RandomString(5), surname = RandomString(8) };
         string model = JsonSerializer.Serialize(userr);
         byte[] data = Encoding.UTF8.GetBytes(model);
-        channel.BasicPublish("", "Test", body: data);
+        //channel.QueueBind("TestQueue", "", "");
+        channel.BasicPublish("", "TestQueue", body: data);
         Console.WriteLine($"{i}. line => {userr}");
     }
 }
-

@@ -1,6 +1,7 @@
 ﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Common;
+using System;
 using System.Text;
 
 Connection con = new Connection();
